@@ -3,7 +3,6 @@
 import { AnalysisResult } from "@/lib/types";
 import {
   CheckCircle2,
-  XCircle,
   AlertCircle,
   BookOpen,
   FlaskConical,

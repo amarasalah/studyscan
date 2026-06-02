@@ -1,7 +1,7 @@
 "use client";
 
 import { AnalysisResult } from "@/lib/types";
-import { FileText, CheckCircle2, XCircle, ThumbsUp, ThumbsDown, Minus, Trash2, ExternalLink } from "lucide-react";
+import { FileText, CheckCircle2, XCircle, ThumbsUp, ThumbsDown, Minus, Trash2 } from "lucide-react";
 
 interface HistoryListProps {
   items: AnalysisResult[];

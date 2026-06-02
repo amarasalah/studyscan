@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
         if (pages.length === 0) {
           return NextResponse.json({ error: "Could not extract content from PDF" }, { status: 400 });
         }
-        imageParts = pages.map((p) => ({
+        imageParts = pages.map((p: { base64: string; mimeType: string }) => ({
           inlineData: { data: p.base64, mimeType: p.mimeType },
         }));
       }

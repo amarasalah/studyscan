@@ -46,6 +46,7 @@ export default function Home() {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAnalysisComplete = async (rawData: any) => {
     const result: AnalysisResult = {
       id: uuidv4(),
