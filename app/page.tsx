@@ -84,7 +84,9 @@ export default function Home() {
       setHistory((prev) => [saved, ...prev]);
     } catch (e) {
       console.error("Failed to save to Firestore:", e);
-      alert("Failed to save study. Check Firestore rules and console for details.");
+      const errorMsg = e instanceof Error ? e.message : String(e);
+      console.error("Error message:", errorMsg);
+      alert(`Failed to save study: ${errorMsg}. Check Firestore rules in Firebase Console.`);
     } finally {
       setSaving(false);
     }

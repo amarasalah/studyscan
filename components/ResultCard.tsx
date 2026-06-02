@@ -345,7 +345,8 @@ function VideoUploadSection({ result }: { result: AnalysisResult }) {
       alert("Video uploaded successfully!");
     } catch (err) {
       console.error("Video upload error:", err);
-      alert("Failed to upload video. Please try again.");
+      const errorMsg = err instanceof Error ? err.message : "Unknown error";
+      alert(`Failed to upload video: ${errorMsg}. Check console for details.`);
     } finally {
       setUploading(false);
     }

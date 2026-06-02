@@ -67,10 +67,11 @@ export async function POST(req: NextRequest) {
       format: result.format,
     });
   } catch (error: unknown) {
-    console.error("Upload error:", error);
+    console.error("Upload error details:", error);
     const message = error instanceof Error ? error.message : "Upload failed";
+    console.error("Error message:", message);
     return NextResponse.json(
-      { error: message },
+      { error: message, details: String(error) },
       { status: 500 }
     );
   }
