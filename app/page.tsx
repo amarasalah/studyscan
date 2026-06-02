@@ -76,12 +76,15 @@ export default function Home() {
 
     setSaving(true);
     try {
+      console.log("Saving to Firestore:", result);
       const docRef = await addDoc(collection(db, "analyses"), result);
+      console.log("Saved successfully with ID:", docRef.id);
       const saved = { ...result, id: docRef.id };
       setCurrentResult(saved);
       setHistory((prev) => [saved, ...prev]);
     } catch (e) {
       console.error("Failed to save to Firestore:", e);
+      alert("Failed to save study. Check Firestore rules and console for details.");
     } finally {
       setSaving(false);
     }

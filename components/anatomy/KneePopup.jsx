@@ -190,16 +190,28 @@ export default function KneePopup({ position, onClose }) {
                   </div>
                 )}
 
-                {/* Video Placeholder */}
-                <div style={{ background:"rgba(0,0,0,.3)", borderRadius:8, padding:"12px", border:"1px solid rgba(0,229,255,.15)" }}>
-                  <div style={{ fontSize:10, color:"#00e5ff", fontWeight:700, marginBottom:8, textTransform:"uppercase", letterSpacing:1 }}>Video Summary</div>
-                  <div style={{ aspectRatio:"16/9", background:"linear-gradient(135deg,rgba(20,26,54,.9),rgba(10,14,30,.9))", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:8 }}>
-                    <div style={{ width:48, height:48, borderRadius:"50%", background:"rgba(0,229,255,.15)", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", transition:"all .2s" }}>
-                      <span style={{ fontSize:20, marginLeft:3 }}>▶</span>
-                    </div>
-                    <div style={{ fontSize:11, color:"rgba(255,255,255,.5)" }}>Video summary coming soon</div>
+                {/* Video Summary */}
+                {latestStudy.videoUrl ? (
+                  <div style={{ background:"rgba(0,0,0,.3)", borderRadius:8, padding:"12px", border:"1px solid rgba(0,229,255,.15)" }}>
+                    <div style={{ fontSize:10, color:"#00e5ff", fontWeight:700, marginBottom:8, textTransform:"uppercase", letterSpacing:1 }}>Video Summary</div>
+                    <video
+                      src={latestStudy.videoUrl}
+                      controls
+                      style={{ width:"100%", borderRadius:6, maxHeight:140 }}
+                      preload="metadata"
+                    />
                   </div>
-                </div>
+                ) : (
+                  <div style={{ background:"rgba(0,0,0,.3)", borderRadius:8, padding:"12px", border:"1px solid rgba(0,229,255,.15)" }}>
+                    <div style={{ fontSize:10, color:"#00e5ff", fontWeight:700, marginBottom:8, textTransform:"uppercase", letterSpacing:1 }}>Video Summary</div>
+                    <div style={{ aspectRatio:"16/9", background:"linear-gradient(135deg,rgba(20,26,54,.9),rgba(10,14,30,.9))", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:8 }}>
+                      <div style={{ width:48, height:48, borderRadius:"50%", background:"rgba(0,229,255,.15)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                        <span style={{ fontSize:20, marginLeft:3 }}>▶</span>
+                      </div>
+                      <div style={{ fontSize:11, color:"rgba(255,255,255,.5)" }}>No video uploaded yet</div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Protocol */}
                 {latestStudy.summary?.protocol && (

@@ -49,4 +49,5 @@ export interface AnalysisResult {
     clinicianAction: string;
   };
   rawGeminiResponse: string;
+  videoUrl?: string;
 }

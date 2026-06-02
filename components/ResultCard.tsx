@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { AnalysisResult } from "@/lib/types";
 import {
   CheckCircle2,
@@ -290,6 +291,112 @@ export default function ResultCard({ result }: ResultCardProps) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Video Upload Section */}
+      <VideoUploadSection result={result} />
+    </div>
+  );
+}
+
+// Video Upload Component
+function VideoUploadSection({ result }: { result: AnalysisResult }) {
+  const [uploading, setUploading] = useState(false);
+  const [videoUrl, setVideoUrl] = useState(result.videoUrl || "");
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith("video/")) {
+      alert("Please upload a video file");
+      return;
+    }
+
+    // Validate file size (max 100MB)
+    if (file.size > 100 * 1024 * 1024) {
+      alert("Video file too large. Max 100MB allowed.");
+      return;
+    }
+
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+
+      // Update Firestore with video URL
+      const { doc, updateDoc, db } = await import("@/lib/firebase");
+      await updateDoc(doc(db, "analyses", result.id), {
+        videoUrl: data.url,
+      });
+
+      setVideoUrl(data.url);
+      alert("Video uploaded successfully!");
+    } catch (err) {
+      console.error("Video upload error:", err);
+      alert("Failed to upload video. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white p-5">
+      <h3 className="text-base font-bold text-slate-800 mb-3 flex items-center gap-2">
+        <span className="text-rose-600">🎥</span>
+        <span>Video Summary</span>
+      </h3>
+
+      {videoUrl ? (
+        <div className="space-y-3">
+          <video
+            src={videoUrl}
+            controls
+            className="w-full rounded-lg max-h-64 object-cover"
+            preload="metadata"
+          />
+          <p className="text-xs text-slate-500">Video uploaded successfully</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 text-center hover:border-rose-400 hover:bg-rose-50/30 transition-colors">
+            <input
+              type="file"
+              accept="video/*"
+              onChange={handleVideoUpload}
+              disabled={uploading}
+              className="hidden"
+              id="video-upload"
+            />
+            <label
+              htmlFor="video-upload"
+              className="cursor-pointer flex flex-col items-center gap-2"
+            >
+              <div className="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center">
+                {uploading ? (
+                  <span className="animate-spin">⏳</span>
+                ) : (
+                  <span className="text-xl">🎥</span>
+                )}
+              </div>
+              <span className="text-sm font-medium text-slate-700">
+                {uploading ? "Uploading..." : "Click to upload video summary"}
+              </span>
+              <span className="text-xs text-slate-400">
+                MP4, WebM, MOV up to 100MB
+              </span>
+            </label>
           </div>
         </div>
       )}
