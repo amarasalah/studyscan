@@ -324,24 +324,39 @@ function VideoUploadSection({ result }: { result: AnalysisResult }) {
 
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
+      // Get upload signature from server
+      const sigRes = await fetch("/api/upload-signature", { method: "POST" });
+      if (!sigRes.ok) throw new Error("Failed to get upload signature");
+      const { signature, timestamp, folder, cloudName, apiKey } = await sigRes.json();
 
-      const res = await fetch("/api/upload", {
+      // Upload directly to Cloudinary (bypasses Vercel 4.5MB limit)
+      const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/video/upload`;
+      const uploadData = new FormData();
+      uploadData.append("file", file);
+      uploadData.append("api_key", apiKey);
+      uploadData.append("timestamp", timestamp.toString());
+      uploadData.append("signature", signature);
+      uploadData.append("folder", folder);
+
+      const uploadRes = await fetch(cloudinaryUrl, {
         method: "POST",
-        body: formData,
+        body: uploadData,
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
+      if (!uploadRes.ok) {
+        const errorData = await uploadRes.text();
+        throw new Error(`Cloudinary upload failed: ${errorData}`);
+      }
+
+      const uploadResult = await uploadRes.json();
 
       // Update Firestore with video URL
       const { doc, updateDoc, db } = await import("@/lib/firebase");
       await updateDoc(doc(db, "analyses", result.id), {
-        videoUrl: data.url,
+        videoUrl: uploadResult.secure_url,
       });
 
-      setVideoUrl(data.url);
+      setVideoUrl(uploadResult.secure_url);
       alert("Video uploaded successfully!");
     } catch (err) {
       console.error("Video upload error:", err);
