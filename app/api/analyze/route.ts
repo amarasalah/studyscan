@@ -40,7 +40,7 @@ async function fetchPdfPagesAsImages(cloudinaryUrl: string): Promise<{ base64: s
 
 export async function POST(req: NextRequest) {
   try {
-    const { fileUrl, fileName, publicId, format } = await req.json();
+    const { fileUrl, format } = await req.json();
 
     if (!fileUrl) {
       return NextResponse.json({ error: "No file URL provided" }, { status: 400 });
@@ -200,6 +200,7 @@ Rules:
       .replace(/\s*```\s*$/i, "")
       .trim();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let parsed: any = {};
     try {
       const jsonMatch = stripped.match(/\{[\s\S]*\}/);
@@ -220,10 +221,11 @@ Rules:
       ...parsed,
       rawGeminiResponse: rawText,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Analyze error:", error);
+    const message = error instanceof Error ? error.message : "Analysis failed";
     return NextResponse.json(
-      { error: error.message || "Analysis failed" },
+      { error: message },
       { status: 500 }
     );
   }
