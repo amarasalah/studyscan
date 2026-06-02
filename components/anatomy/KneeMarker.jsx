@@ -4,7 +4,7 @@ import { Html } from "@react-three/drei";
 
 export default function KneeMarker({ position, active, onClick }) {
   return (
-    <Html position={position} center distanceFactor={8} occlude={false} zIndexRange={[10, 20]} style={{ pointerEvents: "none" }}>
+    <Html position={position} center occlude={false} zIndexRange={[10, 20]} style={{ pointerEvents: "none" }}>
       <div style={{ pointerEvents: "all", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
         <div style={{
           width: 14, height: 14, borderRadius: "50%",

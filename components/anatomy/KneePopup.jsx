@@ -49,7 +49,7 @@ export default function KneePopup({ position, onClose }) {
     ? "✅ Pro-RegenLab" : latestStudy?.inFavorOfRegenLab === false ? "❌ Against" : "➖ Neutral";
 
   return (
-    <Html position={position} distanceFactor={9} occlude={false} zIndexRange={[30, 50]} style={{ pointerEvents: "none" }}>
+    <Html position={position} occlude={false} zIndexRange={[30, 50]} style={{ pointerEvents: "none" }}>
       <style>{`
         @keyframes kp-slide-in { from{opacity:0;transform:translateX(-18px) scale(.94)} to{opacity:1;transform:translateX(0) scale(1)} }
         .kp-card { opacity:0; transform:translateX(-18px) scale(.94); transition:none; }
@@ -189,6 +189,17 @@ export default function KneePopup({ position, onClose }) {
                     <div style={{ fontSize:11, color:"rgba(255,255,255,.75)", lineHeight:1.5 }}>{latestStudy.soWhat.soWhat}</div>
                   </div>
                 )}
+
+                {/* Video Placeholder */}
+                <div style={{ background:"rgba(0,0,0,.3)", borderRadius:8, padding:"12px", border:"1px solid rgba(0,229,255,.15)" }}>
+                  <div style={{ fontSize:10, color:"#00e5ff", fontWeight:700, marginBottom:8, textTransform:"uppercase", letterSpacing:1 }}>Video Summary</div>
+                  <div style={{ aspectRatio:"16/9", background:"linear-gradient(135deg,rgba(20,26,54,.9),rgba(10,14,30,.9))", borderRadius:6, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:8 }}>
+                    <div style={{ width:48, height:48, borderRadius:"50%", background:"rgba(0,229,255,.15)", display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer", transition:"all .2s" }}>
+                      <span style={{ fontSize:20, marginLeft:3 }}>▶</span>
+                    </div>
+                    <div style={{ fontSize:11, color:"rgba(255,255,255,.5)" }}>Video summary coming soon</div>
+                  </div>
+                </div>
 
                 {/* Protocol */}
                 {latestStudy.summary?.protocol && (

@@ -92,7 +92,7 @@ export default function AnatomyViewer() {
 
         {kneePopup && (
           <KneePopup
-            position={[KNEE_TARGET.x + 1.6, KNEE_TARGET.y + 0.3, KNEE_TARGET.z]}
+            position={[KNEE_TARGET.x + 0.25, KNEE_TARGET.y + 0.2, KNEE_TARGET.z]}
             onClose={closeKneeMode}
           />
         )}
