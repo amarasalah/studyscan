@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
         },
         (error, result) => {
           if (error) reject(error);
-          else resolve(result as any);
+          else resolve(result as { secure_url: string; public_id: string; format: string });
         }
       );
       uploadStream.end(buffer);
@@ -60,10 +60,11 @@ export async function POST(req: NextRequest) {
       publicId: result.public_id,
       format: result.format,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Upload error:", error);
+    const message = error instanceof Error ? error.message : "Upload failed";
     return NextResponse.json(
-      { error: error.message || "Upload failed" },
+      { error: message },
       { status: 500 }
     );
   }
