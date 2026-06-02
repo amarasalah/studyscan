@@ -22,17 +22,23 @@ export async function POST(req: NextRequest) {
       "image/png",
       "image/webp",
       "image/gif",
+      "video/mp4",
+      "video/webm",
+      "video/quicktime", // MOV
+      "video/x-matroska", // MKV
     ];
 
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: "Only PDF and image files are supported" },
+        { error: `File type "${file.type}" not supported. Allowed: PDF, images, videos (MP4, WebM, MOV)` },
         { status: 400 }
       );
     }
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+
+    const isVideo = file.type.startsWith("video/");
 
     const result = await new Promise<{
       secure_url: string;
@@ -42,8 +48,8 @@ export async function POST(req: NextRequest) {
     }>((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          resource_type: "auto",
-          folder: "regenscan-studies",
+          resource_type: isVideo ? "video" : "auto",
+          folder: isVideo ? "regenscan-videos" : "regenscan-studies",
           use_filename: true,
           unique_filename: true,
         },
