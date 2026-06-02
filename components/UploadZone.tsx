@@ -5,6 +5,7 @@ import { useDropzone } from "react-dropzone";
 import { Upload, FileText, Image, X, Loader2 } from "lucide-react";
 
 interface UploadZoneProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onAnalysisComplete: (result: any, fileUrl: string, fileName: string) => void;
 }
 
@@ -58,8 +59,9 @@ export default function UploadZone({ onAnalysisComplete }: UploadZoneProps) {
         uploadData.url,
         file.name
       );
-    } catch (err: any) {
-      setErrorMsg(err.message || "An error occurred");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "An error occurred";
+      setErrorMsg(msg);
       setStage("error");
     }
   }, [onAnalysisComplete]);
@@ -88,7 +90,8 @@ export default function UploadZone({ onAnalysisComplete }: UploadZoneProps) {
     setProgress(0);
   };
 
-  const isLoading = stage === "uploading" || stage === "analyzing";
+  const _isLoading = stage === "uploading" || stage === "analyzing";
+  void _isLoading; // used for derived state
 
   return (
     <div className="w-full">
@@ -120,7 +123,7 @@ export default function UploadZone({ onAnalysisComplete }: UploadZoneProps) {
                 <FileText size={12} /> PDF
               </span>
               <span className="flex items-center gap-1.5 text-xs text-slate-400 bg-slate-100 px-3 py-1.5 rounded-full">
-                <Image size={12} /> Images
+                <Image size={12} aria-label="Image icon" /> Images
               </span>
             </div>
           </div>

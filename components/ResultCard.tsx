@@ -217,7 +217,7 @@ export default function ResultCard({ result }: ResultCardProps) {
             </FrameworkRow>
             <div className="bg-violet-600 rounded-xl px-4 py-3 flex items-start gap-3">
               <MessageSquareQuote size={18} className="text-white flex-shrink-0 mt-0.5" />
-              <p className="text-white text-sm font-semibold italic leading-relaxed">"{result.whyEvidenceImpact.takeHomeMessage}"</p>
+              <p className="text-white text-sm font-semibold italic leading-relaxed">&quot;{result.whyEvidenceImpact.takeHomeMessage}&quot;</p>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ export default function ResultCard({ result }: ResultCardProps) {
         <div className="rounded-2xl border border-amber-200 bg-amber-50 overflow-hidden">
           <div className="px-5 py-4 bg-amber-500 flex items-center gap-3">
             <Target size={18} className="text-white" />
-            <span className="font-bold text-white text-sm uppercase tracking-wider">The "So What?" Model</span>
+            <span className="font-bold text-white text-sm uppercase tracking-wider">The &quot;So What?&quot; Model</span>
           </div>
           <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-white rounded-xl border border-amber-200 p-4">
