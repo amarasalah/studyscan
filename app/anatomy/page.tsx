@@ -31,7 +31,7 @@ export default function AnatomyPage() {
             <FileSearch size={18} color="#fff" />
           </div>
           <div>
-            <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b" }}>RegenScan</div>
+            <div style={{ fontSize: 16, fontWeight: 700, color: "#1e293b" }}>StudyScan</div>
             <div style={{ fontSize: 11, color: "#94a3b8" }}>Scientific Study Analyzer</div>
           </div>
         </div>

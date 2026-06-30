@@ -127,7 +127,7 @@ export default function Home() {
               <FileSearch size={20} className="text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-slate-800">RegenScan</h1>
+              <h1 className="text-xl font-bold text-slate-800">StudyScan</h1>
               <p className="text-xs text-slate-400 hidden sm:block">Scientific Study Analyzer</p>
             </div>
           </div>

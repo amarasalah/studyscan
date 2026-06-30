@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RegenScan — Scientific Study Analyzer",
+  title: "StudyScan — Scientific Study Analyzer",
   description: "Upload scientific studies to analyze publication status and RegenLab clinical relevance",
 };
 

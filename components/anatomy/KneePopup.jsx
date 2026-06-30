@@ -78,7 +78,7 @@ export default function KneePopup({ position, onClose }) {
         <div style={{ display:"flex", alignItems:"flex-start", justifyContent:"space-between", marginBottom:10 }}>
           <div>
             <div style={{ fontSize:9, letterSpacing:2, textTransform:"uppercase", color:"#00e5ff", fontWeight:700, marginBottom:3 }}>
-              RegenScan · Anatomy Focus
+              StudyScan · Anatomy Focus
             </div>
             <div style={{ fontSize:18, fontWeight:800, lineHeight:1.1 }}>Knee Joint</div>
             <div style={{ marginTop:3, fontSize:11, color:"rgba(255,255,255,.45)" }}>Articulatio genus</div>
